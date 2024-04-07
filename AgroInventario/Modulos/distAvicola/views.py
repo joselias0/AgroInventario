@@ -15,3 +15,29 @@ def salir(request):
 def index(request):
     return render(request, 'index.html')
 
+@csrf_protect
+@login_required
+def huevos(request):
+    return render(request, 'adm-huevos.html')
+
+@csrf_protect
+@login_required
+def ventas(request):
+    return render(request, 'adm-ventas.html')
+
+@csrf_protect
+@login_required
+def recursos(request):
+    return render(request, 'adm-recursos.html')
+
+@csrf_protect
+@login_required
+def contabilidad(request):
+    return render(request, 'adm-contabilidad.html')
+
+@csrf_protect
+@login_required
+def cuidado(request):
+    return render(request, 'adm-cuidado.html')
+
+
