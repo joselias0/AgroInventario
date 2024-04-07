@@ -1,0 +1,8 @@
+.contenido{
+    display: flex;
+}
+
+#cerrar{
+    text-decoration: none;
+    color: black;
+}
