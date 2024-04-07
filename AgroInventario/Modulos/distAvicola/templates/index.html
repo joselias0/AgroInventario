@@ -18,55 +18,53 @@
         </form>
       </div>
     </nav>
-    <div class="">
-      <br>
-      <div class="contenido">
-        <div class="card objeto" style="width: 18rem;">
-          <img src="" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-primary"></a>
-          </div>
-        </div>
-        <div class="card objeto" style="width: 18rem;">
-          <img src="" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-primary"></a>
-          </div>
-        </div>
-        <div class="card objeto" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-primary"></a>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-center">
+          <div class="contenido">
+            <div class="card objeto me-3" style="width: 18rem;">
+              <img src="{% static 'multimedia/adm-huevos-agro.png' %}" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Administración de huevos</h5>
+                <a href="{% url 'huevos' %}" class="btn btn-primary">Entrar</a>
+              </div>
+            </div>
+            <div class="card objeto me-3" style="width: 18rem;">
+              <img src="{% static 'multimedia/ventas.png' %}" class="card-img-top" >
+              <div class="card-body">
+                <h5 class="card-title">Administración de ventas</h5>
+                <a href="{% url 'ventas' %}" class="btn btn-primary">Entrar</a>
+              </div>
+            </div>
+            <div class="card objeto" style="width: 18rem;">
+              <img src="{% static 'multimedia/adm-recursos.png' %}" class="card-img-top" >
+              <div class="card-body">
+                <h5 class="card-title">Administración de recursos</h5>
+                <a href="{% url 'recursos' %}" class="btn btn-primary">Entrar</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <br>
-      <div class="contenido">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-primary"></a>
-          </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-primary"></a>
+      <div class="row">
+        <div class="col-md-12 d-flex justify-content-center">
+          <div class="contenido ">
+            <div class="card me-3" style="width: 18rem;">
+              <img src="{% static 'multimedia/adm-contabilidad.png' %}" class="card-img-top" >
+              <div class="card-body">
+                <h5 class="card-title">Contabilidad</h5>
+                <a href="{% url 'contabilidad' %}" class="btn btn-primary">Entrar</a>
+              </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+              <img src="{% static 'multimedia/adm-salud.png' %}" class="card-img-top" >
+              <div class="card-body">
+                <h5 class="card-title">Cuidado de gallinas</h5>
+                <a href="{% url 'cuidado' %}" class="btn btn-primary">Entrar</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
