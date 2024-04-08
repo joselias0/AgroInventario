@@ -9,8 +9,11 @@ urlpatterns = [
     path('salir/', salir, name='salir' ),
     path('huevos/',huevos, name='huevos'),
     path('ventas/',ventas, name='ventas'),
-    path('recursos/',recursos, name='recursos'),
+    path('recurso/',recurso, name='recurso'),
     path('contabilidad/',contabilidad, name='contabilidad'),
     path('cuidado/',cuidado, name='cuidado'),
+    path('recursos/gasto',agregarGasto, name='gasto'),
+    path('recursos/adicion', adicion, name='adicion'),
+
 ]
 
