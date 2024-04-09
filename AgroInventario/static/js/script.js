@@ -11,3 +11,10 @@ document.getElementById('btn2').addEventListener('click', function () {
     localStorage.setItem('fecha_inicio', fechaInicioInput.value);
     localStorage.setItem('fecha_fin', fechaFinInput.value);
 });
+
+
+function botonEliminar(id_per) {
+    if (confirm('¿Estás seguro de que deseas eliminar este objeto?')) {
+        window.location.href = `/borrar/${id_per}`;
+    }
+}

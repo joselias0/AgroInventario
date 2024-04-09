@@ -30,16 +30,14 @@ def generar_pdf_vp(request):
         if gastos is not None:
             suma_gastos = float(gastos)
         else:
-            gastos = 0.0
+            suma_gastos = 0.0
 
         ventas1 = ventas.objects.filter(fecha__range=(fecha_inicio, fecha_fin)).aggregate(total=Sum('precio_final'))['total']
         suma_ganancias = 0
         if ventas1 is not None:
             suma_ganancias = float(ventas1)
         else:
-            gastos = 0.0
-        suma_gastos = float(gastos)
-
+            suma_ganancias = 0.0
         balance = suma_ganancias - suma_gastos
 
         if btn == 'vista_previa':
@@ -88,4 +86,8 @@ def generar_pdf_vp(request):
 
             return response
 
-    return render(request, 'adm-contabilidad.html', {'suma_ganancias': suma_ganancias, 'suma_gastos': suma_gastos, 'fecha_inicio':fecha_inicio, 'fecha_fin':fecha_fin, 'balance':balance})
+    return HttpResponse("Error: No se pudo generar el PDF")
+
+def pag_add_tamaño(request):
+    tam = Tamaño.objects.all()
+    return render(request, 'add_tamaño.html', {'Tamaño': tam})
