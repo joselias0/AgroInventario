@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
+from .models import *
 # Create your views here.
 
 @login_required
@@ -18,11 +19,12 @@ def index(request):
 @csrf_protect
 @login_required
 def huevos(request):
-    return render(request, 'adm-huevos.html')
+    pro = Producto.objects.all()
+    return render(request, 'adm-huevos.html', {'Producto':pro})
 
 @csrf_protect
 @login_required
-def ventas(request):
+def venta(request):
     return render(request, 'adm-ventas.html')
 
 @csrf_protect
