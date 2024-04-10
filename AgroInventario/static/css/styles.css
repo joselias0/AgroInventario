@@ -10,3 +10,8 @@
 #btn-reg {
     text-align: end;
 }
+
+.container {
+    margin: 0 auto;
+    max-width: 800px;
+  }
