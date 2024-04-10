@@ -11,7 +11,6 @@ class Tamaño(models.Model):
     
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)  
-    nombre = models.CharField(max_length=45)
     cantidad = models.IntegerField()
     precio = models.FloatField()
     tamaño = models.ForeignKey(Tamaño, to_field='id', on_delete=models.SET_NULL, null=True)
