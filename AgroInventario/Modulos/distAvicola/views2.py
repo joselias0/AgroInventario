@@ -121,14 +121,14 @@ def pag_add_inventario(request, id1):
 @login_required
 @csrf_protect
 def add_tamano(request):
-    Prod = Producto.objects.all()
     if request.method == 'POST':
+        Prod1 = Producto.objects.all()
         cantidad1 = request.POST['cantidad']
         precio1 = request.POST['precio']
         tamaño = request.POST['tamaño']
         id_tamaño=Tamaño.objects.get(pk=tamaño)
         message = "La nueva clasificación fue agregada con exito"
-        
+        precio1 = precio1.replace(',', '.')
 
         Prod = Producto.objects.create(
             cantidad=cantidad1,
@@ -138,17 +138,17 @@ def add_tamano(request):
 
         Prod.save()
         
-
-        return render(request, 'adm-huevos.html', {'Producto': Prod, 'message':message}) 
+        return render(request, 'adm-huevos.html', {'Producto': Prod1, 'message':message}) 
 
 @login_required
 @csrf_protect   
 def borrar_tamano(request, id):
     try:
         Prod = Producto.objects.all()
+        message = "La clasificación fue borrada con exito"
         p_delete = Producto.objects.get(id=id)
         p_delete.delete()
-        return render(request, 'adm-huevos.html', {'Producto': Prod})
+        return render(request, 'adm-huevos.html', {'Producto': Prod, 'error_message' : message})
     except:
         return JsonResponse({'error': 'El registro no ha sido borrado'})
     
