@@ -7,6 +7,7 @@
     <title>Inventario</title>
     <link rel="icon" type="image/png" href="{% static 'multimedia/granja.jpg' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -37,7 +38,7 @@
         {% endif %}
       </center>
       <h1 class="text-center mt-3">Clasificación e inventario</h1>
-      <a  href="{% url 'pag_add_tamaño' %}" type="submit" class="btn btn-primary mt-3 mb-3">Agregar</a>
+      <a  href="{% url 'pag_add_tamaño' %}" type="submit" class="btn btn-success mt-3 mb-3"><i class="fas fa-plus"></i> Agregar</a>
       <br>
       <div class="row">
         <div class="col-md-12 d-flex justify-content-center">
@@ -50,9 +51,9 @@
                 <p class="card-text">Cartones disponibles: {{pro.cantidad}}</p>
                 <p class="card-text">{{pro.precio}} $</p>
                 <div class="contenido">
-                  <a href="{% url 'pag_add_inventario' pro.id %}" class="btn btn-primary me-1">Agregar</a>
-                  <a type="submit" class="btn btn-secondary me-1" href="{% url 'edit_tamano' pro.id  %}">Editar</a>
-                  <a type="submit" class="btn btn-danger" onclick="botonEliminar1('{{ pro.id }}')">Eliminar</a>
+                  <a href="{% url 'pag_add_inventario' pro.id %}" class="btn btn-success me-1"><i class="fas fa-plus"></i> Agregar</a>
+                  <a type="submit" class="btn btn-primary me-1" href="{% url 'edit_tamano' pro.id  %}"><i class="fas fa-edit"></i> Editar</a>
+                  <a type="submit" class="btn btn-danger" onclick="botonEliminar1('{{ pro.id }}')"><i class="fas fa-trash-alt"></i> Eliminar</a>
                 </div>
               </div>
             </div>
@@ -64,9 +65,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </body>
 </html>

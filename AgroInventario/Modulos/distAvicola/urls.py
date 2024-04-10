@@ -7,7 +7,14 @@ from django.contrib.staticfiles.urls import static
 urlpatterns = [
     path('',index, name='index'),
     path('salir/', salir, name='salir' ),
-    path('recursos/',recursos, name='recursos'),
-    path('cuidado/',cuidado, name='cuidado')
+    path('huevos/',huevos, name='huevos'),
+    path('recursos/',recurso, name='recursos'),
+    path('contabilidad/',contabilidad, name='contabilidad'),
+    path('cuidado/',cuidado, name='cuidado'),
+    path('recursos/gasto/',agregarGasto, name='gasto'),
+    path('recursos/adicion', adicion, name='adicion'),
+    path('recursos/editarRecurso/<int:id>', editarRecurso, name='editar_recurso'),
+    path('eliminarRecurso/<int:id>', eliminarRecurso,name='eliminarRecurso'),
+
 ]
 
