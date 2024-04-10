@@ -1,8 +1,10 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
-from .models import recursos
+from django.contrib import messages
+from .models import recursos, gastos_recursos ,salud_gallinas
+from .formularios import RecursoForm , GastoForm, SaludForm
 # Create your views here.
 
 @login_required
@@ -41,13 +43,43 @@ def contabilidad(request):
 @csrf_protect
 @login_required
 def agregarGasto(request):
-    return render(request, 'adm-agregarGasto.html')
+    formulario = GastoForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        return redirect('recurso')
+    return render(request, 'adm-agregarGasto.html', {'formulario': formulario})
 
 @csrf_protect
 @login_required
 def adicion(request):
-    return render(request, 'adm-adicion.html')
+    formulario = RecursoForm(request.POST or None, request.FILES or None)
+    if formulario.is_valid():
+        formulario.save()
+        messages.success(request, '¡Recurso Agregado con Exito!')   
+        return redirect('recurso')
+    return render(request, 'adm-adicion.html', {'formulario': formulario})
 
+
+
+@csrf_protect
+@login_required
+def editarRecurso(request, id):
+    recurso = recursos.objects.get(id=id)
+    formulario = RecursoForm(request.POST or None, request.FILES or None, instance=recurso)
+    if formulario.is_valid() and request.POST:
+        formulario.save()
+        return redirect('recurso')
+    return render(request, 'adm-editarRecurso.html', {'formulario': formulario})
+
+
+
+@csrf_protect
+@login_required
+def eliminarRecurso(request, id):
+    recurso_delete = get_object_or_404(recursos, id=id)
+    recurso_delete.delete(using=None, keep_parents=False)
+    messages.error(request,"Recurso Eliminado!")
+    return redirect('recurso')
 
 @csrf_protect
 @login_required

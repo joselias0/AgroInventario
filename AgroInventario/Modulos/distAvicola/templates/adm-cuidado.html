@@ -21,6 +21,33 @@
     </nav>
 
 
+    <div class="container p-5">
+      <h2 class="text-center">Agregar Cuidado</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group mt-4 mb-4">
+          <label for="accion">Tipo de Accion:</label>
+          <input type="text" class="form-control" id="accion" name="accion" required>
+        <div class="form-group mt-4 mb-4">
+          <label for="id_fecha">Fecha:</label>
+          <input type="date" class="form-control" id="id_fecha" name="fecha" required>
+        </div>
+        <div class="form-group mt-4 mb-4">
+          <label for="id_recurso_utilizado">Recurso Utilizado:</label>
+          <input type="text" class="form-control" id="id_recurso_utilizado" name="recurso_utilizado" required>
+        </div>
+        <div class="form-group mt-4 mb-4">
+          <label for="id_cantidad_recurso_usado">Cantidad de Recurso Usado:</label>
+          <input type="number" class="form-control" id="id_cantidad_recurso_usado" name="cantidad_recurso_usado" min="1" required>
+        </div>
+        <div class="form-group mt-4 mb-4">
+          <label for="id_comentario">Comentario:</label>
+          <textarea class="form-control" id="id_comentario" name="comentario" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Acción</button>
+      </form>
+    </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>

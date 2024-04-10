@@ -1,0 +1,16 @@
+<style>
+    .capitalize-label {
+        text-transform: capitalize;
+    }
+</style>
+
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {% for campo in formulario %}
+    <div class="form-group mt-4 mb-4">
+        <label for="{{ campo.id_for_label }}" class="capitalize-label">{{ campo.label }}</label>
+        <input type="{{ campo.field.widget.input_type }}" value="{{campo.value | default:''}}" class="form-control"  id="{{ campo.id_for_label }}" name="{{ campo.name }}"{% if campo.field.required %}required{% endif %}>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>

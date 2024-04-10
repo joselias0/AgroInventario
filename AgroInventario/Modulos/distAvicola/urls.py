@@ -12,8 +12,10 @@ urlpatterns = [
     path('recurso/',recurso, name='recurso'),
     path('contabilidad/',contabilidad, name='contabilidad'),
     path('cuidado/',cuidado, name='cuidado'),
-    path('recursos/gasto',agregarGasto, name='gasto'),
+    path('recursos/gasto/',agregarGasto, name='gasto'),
     path('recursos/adicion', adicion, name='adicion'),
+    path('recursos/editarRecurso/<int:id>', editarRecurso, name='editar_recurso'),
+    path('eliminarRecurso/<int:id>', eliminarRecurso,name='eliminarRecurso'),
 
 ]
 
