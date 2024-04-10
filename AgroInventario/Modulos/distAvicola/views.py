@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
+<<<<<<< HEAD
 from django.contrib import messages
 from .models import recursos, gastos_recursos ,salud_gallinas
 from .formularios import RecursoForm , GastoForm, SaludForm
+=======
+from .models import *
+>>>>>>> 56afc465aff3921e18c22fac0a2fce58e76e9ce6
 # Create your views here.
 
 @login_required
@@ -21,11 +25,12 @@ def index(request):
 @csrf_protect
 @login_required
 def huevos(request):
-    return render(request, 'adm-huevos.html')
+    pro = Producto.objects.all()
+    return render(request, 'adm-huevos.html', {'Producto':pro})
 
 @csrf_protect
 @login_required
-def ventas(request):
+def venta(request):
     return render(request, 'adm-ventas.html')
 
 @csrf_protect
