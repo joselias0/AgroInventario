@@ -26,28 +26,32 @@
         <br>
         <div style="display: flex;">
             <div>
-                <form method="post" action="/add_tamano/">
+                {% if Producto %}
+                <form method="post" action="{% url 'edit_tamano' Producto.id  %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="id_dep" class="form-label">Tamaño</label>
                         <select class="form-select" id="tamaño" name="tamaño" required>
-                            <option value="">Seleccione un tamaño</option>
                             {% for tam in Tamaño %}
-                            <option value="{{ tam.id }}">{{ tam.nombre }}</option>
+                                {% if tam.id == Producto.tamaño.id %}
+                                    <option value="{{ tam.id }}" selected>{{ tam.nombre }}</option>
+                                {% else %}
+                                    <option value="{{ tam.id }}">{{ tam.nombre }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad de cartones</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" required min="0">
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" required min="0" value="{{Producto.cantidad}}">
                     </div>
                     <div class="mb-3">
                         <label for="precio" class="form-label">Precio</label>
-                        <input type="text" class="form-control" id="precio" name="precio" required>
+                        <input type="text" class="form-control" id="precio" name="precio" required value="{{Producto.precio}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Agregar</button>
                 </form>
-
+                {% endif %}
             </div>
             <br>
             <div class="text-center" style="padding-left: 3rem;">

@@ -12,9 +12,8 @@ document.getElementById('btn2').addEventListener('click', function () {
     localStorage.setItem('fecha_fin', fechaFinInput.value);
 });
 
-
-function botonEliminar(id_per) {
+function botonEliminar1(id) {
     if (confirm('¿Estás seguro de que deseas eliminar este objeto?')) {
-        window.location.href = `/borrar/${id_per}`;
+    window.location.href = `/borrar_tamano/${id}`;
     }
 }
