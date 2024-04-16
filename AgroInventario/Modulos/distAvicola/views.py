@@ -39,14 +39,22 @@ def recurso(request):
 def contabilidad(request):
     return render(request, 'adm-contabilidad.html')
 
-
 @csrf_protect
 @login_required
-def agregarGasto(request):
-    formulario = GastoForm(request.POST or None, request.FILES or None)
-    if formulario.is_valid():
-        formulario.save()
-        return redirect('recurso')
+def agregarGasto(request, id_recurso):
+    recurso = recursos.objects.get(id=id_recurso)
+    if request.method == 'POST':
+        formulario = GastoForm(request.POST)
+        if formulario.is_valid():
+            gasto = formulario.save(commit=False)
+            gasto.id_recurso = recurso
+            gasto.save()
+            recurso.cantidad_disponible += gasto.cantidad_agregada
+            recurso.save()
+            messages.success(request, '¡Gasto Agregado con Exito!')   
+            return redirect('recurso')
+    else:
+        formulario = GastoForm()
     return render(request, 'adm-agregarGasto.html', {'formulario': formulario})
 
 @csrf_protect
@@ -78,12 +86,47 @@ def editarRecurso(request, id):
 def eliminarRecurso(request, id):
     recurso_delete = get_object_or_404(recursos, id=id)
     recurso_delete.delete(using=None, keep_parents=False)
-    messages.error(request,"Recurso Eliminado!")
+    messages.error(request,"¡Recurso Eliminado!")
     return redirect('recurso')
+
+from django.contrib import messages
 
 @csrf_protect
 @login_required
 def cuidado(request):
-    return render(request, 'adm-cuidado.html')
+    recursos_disponibles = recursos.objects.all()
+    if request.method == 'POST':
+        formulario = SaludForm(request.POST)
+        if formulario.is_valid():
+            tipo_accion = formulario.cleaned_data['tipo_accion']
+            fecha = formulario.cleaned_data['fecha']
+            comentarios = formulario.cleaned_data['comentarios']
+            cantidad_recurso_usado = formulario.cleaned_data['cantidad_recurso_usado']
+            id_recurso_id = request.POST['id_recurso'] 
+            
+            recurso = get_object_or_404(recursos, pk=id_recurso_id)
+            
+            if cantidad_recurso_usado > recurso.cantidad_disponible:
+                messages.error(request, 'No hay suficiente cantidad disponible de este recurso.')
+                return redirect('cuidado')
+            
+            cuidado_gallinas = salud_gallinas.objects.create(
+                tipo_accion=tipo_accion,
+                fecha=fecha,
+                comentarios=comentarios,
+                cantidad_recurso_usado=cantidad_recurso_usado,
+                id_recurso_id=id_recurso_id 
+            )
+            
+            recurso.cantidad_disponible -= cantidad_recurso_usado
+            recurso.save()
+
+            messages.success(request, 'Se registro el cuidado con exito.')
+            return redirect('cuidado') 
+            
+    else:
+        formulario = SaludForm()
+
+    return render(request, 'adm-cuidado.html', {'formulario': formulario, 'recursos_disponibles': recursos_disponibles})
 
 

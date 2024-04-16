@@ -8,47 +8,74 @@
     <link rel="icon" type="image/png" href="{% static 'multimedia/granja.jpg' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   </head>
   <body>
     <nav class="navbar" style="background-color: #72c55d;">
       <div class="container">
         <a class="navbar-brand">AgroInventario</a>
         <form class="d-flex" role="search">
-          <a id="cerrar" href="{% url 'index' %}" class="me-3 btn btn-warning">Regresar</a>
-          <a id="cerrar" href="{% url 'salir' %}" class="btn btn-danger">Cerrar Sesión</a>
+          <a id="cerrar" href="{% url 'index' %}" class="me-3 btn btn-warning text-light">Regresar</a>
+          <a id="cerrar" href="{% url 'salir' %}" class="btn btn-danger text-light">Cerrar Sesión</a>
         </form>
       </div>
     </nav>
-
-
     <div class="container p-5">
+      <div>
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.tags == 'success' %}
+              <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong class="text-dark">{{ message }}</strong>
+              </div>
+            {% elif message.tags == 'error' %}
+              <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong class="text-dark">{{ message }}</strong>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
+      </div>
       <h2 class="text-center">Agregar Cuidado</h2>
       <form method="post">
         {% csrf_token %}
         <div class="form-group mt-4 mb-4">
-          <label for="accion">Tipo de Accion:</label>
-          <input type="text" class="form-control" id="accion" name="accion" required>
-        <div class="form-group mt-4 mb-4">
-          <label for="id_fecha">Fecha:</label>
-          <input type="date" class="form-control" id="id_fecha" name="fecha" required>
+            <label for="accion">Tipo de Acción:</label>
+            <input type="text" class="form-control" id="accion" name="tipo_accion" required>
         </div>
         <div class="form-group mt-4 mb-4">
-          <label for="id_recurso_utilizado">Recurso Utilizado:</label>
-          <input type="text" class="form-control" id="id_recurso_utilizado" name="recurso_utilizado" required>
+            <label for="id_fecha">Fecha:</label>
+            <input type="date" class="form-control" id="id_fecha" name="fecha" required>
         </div>
         <div class="form-group mt-4 mb-4">
-          <label for="id_cantidad_recurso_usado">Cantidad de Recurso Usado:</label>
-          <input type="number" class="form-control" id="id_cantidad_recurso_usado" name="cantidad_recurso_usado" min="1" required>
+          <label for="id_recurso">Seleccione Recurso Utilizado:</label>
+          <select class="form-control" id="id_recurso" name="id_recurso" required>
+              {% for recurso in recursos_disponibles %}
+                  <option value="{{ recurso.id }}">{{ recurso.nombre_recurso }}</option>
+              {% endfor %}
+          </select>
+      </div>
+        <div class="form-group mt-4 mb-4">
+            <label for="id_cantidad_recurso_usado">Cantidad de Recurso Usado:</label>
+            <input type="number" class="form-control" id="id_cantidad_recurso_usado" name="cantidad_recurso_usado" min="1" required>
         </div>
         <div class="form-group mt-4 mb-4">
-          <label for="id_comentario">Comentario:</label>
-          <textarea class="form-control" id="id_comentario" name="comentario" rows="3" required></textarea>
-        </div>
+          <label for="comentarios">Comentario:</label>
+          <textarea class="form-control" id="comentarios" name="comentarios" rows="3" required></textarea>
+      </div>      
         <button type="submit" class="btn btn-primary">Agregar Acción</button>
-      </form>
-    </div>
+    </form>
+    </div>  
 
 
+    <script>
+      setTimeout(function() {
+        $('.alert').alert('close');
+      }, 5000);
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

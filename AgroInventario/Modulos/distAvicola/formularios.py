@@ -6,12 +6,17 @@ class RecursoForm(forms.ModelForm):
         model = recursos
         fields = '__all__'
 
+
 class GastoForm(forms.ModelForm):
     class Meta:
         model = gastos_recursos
-        fields = '__all__'
+        fields = ['precio', 'fecha', 'cantidad_agregada']
+
 
 class SaludForm(forms.ModelForm):
     class Meta:
         model = salud_gallinas
-        fields = '__all__'
+        fields = ['tipo_accion', 'fecha', 'id_recurso', 'cantidad_recurso_usado', 'comentarios']
+
+    # Modificar el campo id_recurso para que sea un ModelChoiceField
+    id_recurso = forms.ModelChoiceField(queryset=recursos.objects.all(), empty_label=None)
