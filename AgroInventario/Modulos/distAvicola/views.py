@@ -2,14 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
-<<<<<<< HEAD
 from django.contrib import messages
 from .models import recursos, gastos_recursos ,salud_gallinas
 from .formularios import RecursoForm , GastoForm, SaludForm
-=======
 from .models import *
->>>>>>> 56afc465aff3921e18c22fac0a2fce58e76e9ce6
-# Create your views here.
+
 
 @login_required
 @csrf_protect
