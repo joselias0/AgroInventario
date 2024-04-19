@@ -55,7 +55,7 @@ def agregarGasto(request, id_recurso):
             return redirect('recurso')
     else:
         formulario = GastoForm()
-    return render(request, 'adm-agregarGasto.html', {'formulario': formulario})
+    return render(request, 'adm-agregarGasto.html', {'formulario': formulario , 'recurso' : recurso} )
 
 @csrf_protect
 @login_required
@@ -77,7 +77,7 @@ def editarRecurso(request, id):
     if formulario.is_valid() and request.POST:
         formulario.save()
         return redirect('recurso')
-    return render(request, 'adm-editarRecurso.html', {'formulario': formulario})
+    return render(request, 'adm-editarRecurso.html', {'formulario': formulario , 'recurso' : recurso})
 
 
 
@@ -89,11 +89,12 @@ def eliminarRecurso(request, id):
     messages.error(request,"¡Recurso Eliminado!")
     return redirect('recurso')
 
-from django.contrib import messages
+
 
 @csrf_protect
 @login_required
 def cuidado(request):
+    salud_list = salud_gallinas.objects.all()
     recursos_disponibles = recursos.objects.all()
     if request.method == 'POST':
         formulario = SaludForm(request.POST)
@@ -127,6 +128,6 @@ def cuidado(request):
     else:
         formulario = SaludForm()
 
-    return render(request, 'adm-cuidado.html', {'formulario': formulario, 'recursos_disponibles': recursos_disponibles})
+    return render(request, 'adm-cuidado.html', {'formulario': formulario, 'recursos_disponibles': recursos_disponibles, 'salud_list': salud_list})
 
 

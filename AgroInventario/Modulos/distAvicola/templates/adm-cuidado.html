@@ -39,38 +39,74 @@
           {% endfor %}
           {% endif %}
       </div>
-      <h2 class="text-center">Agregar Cuidado</h2>
-      <form method="post">
-        {% csrf_token %}
-        <div class="form-group mt-4 mb-4">
-            <label for="accion">Tipo de Acción:</label>
-            <input type="text" class="form-control" id="accion" name="tipo_accion" required>
+
+
+    <h1 class="text-center mt-3">Listado de Cuidados</h1>
+    <a  data-bs-toggle="modal" data-bs-target="#ModalSalud" type="submit" class="btn btn-primary mt-3 mb-3">Agregar Cuidado</a>
+    <table class="table text-center">
+    <thead>
+    <tr>
+      <th scope="col">Tipo de Accion</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Recurso</th>
+      <th scope="col">Cantidad Utilizada</th>
+      <th scope="col">Comentarios</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for salud in salud_list %}
+    <tr>
+      <td>{{ salud.tipo_accion}}</td>
+      <td>{{  salud.fecha|date:"d/m/Y" }}</td>
+      <td>{{ salud.id_recurso.nombre_recurso }}</td>
+      <td>{{ salud.cantidad_recurso_usado}}</td>
+      <td>{{ salud.comentarios }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  </div>  
+  <div class="modal fade" id="ModalSalud" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Registrar Cuidado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="form-group mt-4 mb-4">
-            <label for="id_fecha">Fecha:</label>
-            <input type="date" class="form-control" id="id_fecha" name="fecha" required>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group mt-4 mb-4">
+                <label for="accion">Tipo de Acción:</label>
+                <input type="text" class="form-control" id="accion" name="tipo_accion" required>
+            </div>
+            <div class="form-group mt-4 mb-4">
+                <label for="id_fecha">Fecha:</label>
+                <input type="date" class="form-control" id="id_fecha" name="fecha" required>
+            </div>
+            <div class="form-group mt-4 mb-4">
+              <label for="id_recurso">Seleccione Recurso Utilizado:</label>
+              <select class="form-control" id="id_recurso" name="id_recurso" required>
+                  {% for recurso in recursos_disponibles %}
+                      <option value="{{ recurso.id }}">{{ recurso.nombre_recurso }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+            <div class="form-group mt-4 mb-4">
+                <label for="id_cantidad_recurso_usado">Cantidad de Recurso Usado:</label>
+                <input type="number" class="form-control" id="id_cantidad_recurso_usado" name="cantidad_recurso_usado" min="1" required>
+            </div>
+            <div class="form-group mt-4 mb-4">
+              <label for="comentarios">Comentario:</label>
+              <textarea class="form-control" id="comentarios" name="comentarios" rows="3" required></textarea>
+          </div>      
+            <button type="submit" class="btn btn-primary">Agregar Acción</button>
+        </form>	
         </div>
-        <div class="form-group mt-4 mb-4">
-          <label for="id_recurso">Seleccione Recurso Utilizado:</label>
-          <select class="form-control" id="id_recurso" name="id_recurso" required>
-              {% for recurso in recursos_disponibles %}
-                  <option value="{{ recurso.id }}">{{ recurso.nombre_recurso }}</option>
-              {% endfor %}
-          </select>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
       </div>
-        <div class="form-group mt-4 mb-4">
-            <label for="id_cantidad_recurso_usado">Cantidad de Recurso Usado:</label>
-            <input type="number" class="form-control" id="id_cantidad_recurso_usado" name="cantidad_recurso_usado" min="1" required>
-        </div>
-        <div class="form-group mt-4 mb-4">
-          <label for="comentarios">Comentario:</label>
-          <textarea class="form-control" id="comentarios" name="comentarios" rows="3" required></textarea>
-      </div>      
-        <button type="submit" class="btn btn-primary">Agregar Acción</button>
-    </form>
-    </div>  
-
-
     <script>
       setTimeout(function() {
         $('.alert').alert('close');
