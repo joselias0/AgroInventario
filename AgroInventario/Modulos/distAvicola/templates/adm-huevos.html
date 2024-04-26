@@ -1,75 +1,109 @@
 {% load static %}
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inventario</title>
-    <link rel="icon" type="image/png" href="{% static 'multimedia/granja.jpg' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventario</title>
+  <link rel="icon" type="image/png" href="{% static 'multimedia/granja.jpg' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+
 <body>
-    <nav class="navbar" style="background-color: #72c55d;">
-        <div class="container">
-          <a class="navbar-brand">AgroInventario</a>
-          <form class="d-flex" role="search">
-            <a id="cerrar" href="{% url 'index' %}" class="me-3 btn btn-warning">Regresar</a>
-            <a id="cerrar" href="{% url 'salir' %}" class="btn btn-danger">Cerrar Sesión</a>
-          </form>
-        </div>
-    </nav>
-    <br>
-    
+  <nav class="navbar" style="background-color: #72c55d;">
     <div class="container">
-      <center>
-        {% if error_message %}
-        <div class="alert alert-danger">
-          {{ error_message }}
-        </div>
-        {% endif %}
-      </center>
-      <center>
-        {% if message %}
-        <div class="alert alert-success">
-          {{ message }}
-        </div>
-        {% endif %}
-      </center>
-      <h1 class="text-center mt-3">Clasificación e inventario</h1>
-      <a  href="{% url 'pag_add_tamaño' %}" type="submit" class="btn btn-success mt-3 mb-3"><i class="fas fa-plus"></i> Agregar</a>
-      <br>
-      <div class="row">
-        <div class="col-md-12 d-flex justify-content-center">
-          <div class="contenido">
-            {% for pro in Producto %}
-            <div class="card objeto me-3" style="width: 18rem;">
-              <img src="{% static 'multimedia/adm-huevos-agro.png' %}" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">{{pro.tamaño}}</h5>
-                <p class="card-text">Cartones disponibles: {{pro.cantidad}}</p>
-                <p class="card-text">{{pro.precio}} $</p>
-                <div class="contenido">
-                  <a href="{% url 'pag_add_inventario' pro.id %}" class="btn btn-success me-1"><i class="fas fa-plus"></i> Agregar</a>
-                  <a type="submit" class="btn btn-primary me-1" href="{% url 'edit_tamano' pro.id  %}"><i class="fas fa-edit"></i> Editar</a>
-                  <a type="submit" class="btn btn-danger" onclick="botonEliminar1('{{ pro.id }}')"><i class="fas fa-trash-alt"></i> Eliminar</a>
-                </div>
-              </div>
+      <a class="navbar-brand text-white">AgroInventario</a>
+      <form class="d-flex" role="search">
+        <a id="cerrar" href="{% url 'index' %}" class="me-3 btn btn-warning">Regresar</a>
+        <a id="cerrar" href="{% url 'salir' %}" class="btn btn-danger text-white">Cerrar Sesión</a>
+      </form>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <center>
+      {% if error_message %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+    </center>
+    <center>
+      {% if message %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+    </center>
+    <h1 class="text-center mt-3">Clasificación e inventario</h1>
+    <a class="btn btn-success" onclick="abrir_modal_tamano('{% url 'pag_add_tamano' %}')"><i class="fas fa-plus"></i> Agregar</a>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+      {% for pro in Producto %}
+      <div class="col-lg-3 col-md-3 col-sm-5">
+        <div class="card objeto" id="card">
+          {% if pro.tamaño.nombre == 'mediano'%}
+          <img src="{% static 'multimedia/h_mediano.png' %}" class="card-img-top img-fluid">
+          {% elif pro.tamaño.nombre == 'grande' %}
+          <img src="{% static 'multimedia/h_grande.png' %}" class="card-img-top img-fluid">
+          {% elif pro.tamaño.nombre == 'extra grande' %}
+          <img src="{% static 'multimedia/h_extra.png' %}" class="card-img-top img-fluid">
+          {% elif pro.tamaño.nombre == 'jumbo' %}
+          <img src="{% static 'multimedia/h_jumbo.png' %}" class="card-img-top img-fluid">
+          {% endif %}
+          <div class="card-body">
+            <input type="hidden" value="{{ pro.id }}" name="id">
+            <h5 class="card-title">Huevo {{pro.tamaño.nombre}}</h5>
+            <p class="card-text">Cartones disponibles: <a type="button" title="Ver detalles"
+                href="{% url 'ver-lotes' pro.id %}">{{pro.cantidad}}</a></p>
+            <p class="card-text">Costo: {{pro.costo_produccion}} $</p>
+            <div class="d-flex">
+              <a onclick="abrir_modal_inventario('{% url 'pag_add_inventario' pro.id %}')" class="btn btn-success me-1"><i class="fas fa-plus"></i>
+                Agregar</a>
+              <button onclick="abrir_modal_edicion('{% url 'edit_tamano' pro.id %}')" class="btn btn-primary me-1"><i
+                  class="fas fa-edit"></i> Editar</button>
+              <a type="submit" class="btn btn-danger" onclick="borrar_modal('{% url 'pag_borrar_prod' pro.id %}')"><i
+                  class="fas fa-trash-alt"></i> Eliminar</a>
             </div>
-            {% endfor %}
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <br>
+    <div class="modal fade" id="add_inventario" role="dialog">
+    </div>
+    <div class="modal fade" id="add_tamano" role="dialog">
+    </div>
+    <div class="modal fade" id="edit_tamaño" role="dialog">
+    </div>
+    <div class="modal fade" id="borrar" role="dialog">
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
 </body>
+
 </html>

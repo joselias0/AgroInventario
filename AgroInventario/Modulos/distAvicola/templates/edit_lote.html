@@ -1,0 +1,35 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar lote</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <center>
+          {% if error_message %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error_message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+        </center>
+        {% if lote %}
+        <form method="post" action="{% url 'edit_lote' lote.id  %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="cantidad" class="form-label">Cantidad de cartones</label>
+              <input type="number" class="form-control" id="cantidad" name="cantidad" required min="1" value="{{ lote.cantidad }}">
+            </div>
+            <div class="mb-3">
+              <label for="precio_unitario" class="form-label">Precio de venta individual:</label>
+              <input type="text" class="form-control" id="precio_unitario" name="precio_unitario" value="{{ lote.precio_individual }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Editar</button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>

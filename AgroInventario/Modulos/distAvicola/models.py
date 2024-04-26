@@ -1,38 +1,35 @@
 from django.db import models
 
-
 class Tamaño(models.Model):
     id = models.AutoField(primary_key=True) 
     nombre = models.CharField(max_length=45)
 
-    def __str__(self):
-        return self.nombre
-
-    
 class Producto(models.Model):
     id = models.AutoField(primary_key=True)  
     cantidad = models.IntegerField()
-    precio = models.FloatField()
-    tamaño = models.ForeignKey(Tamaño, to_field='id', on_delete=models.SET_NULL, null=True)
+    costo_produccion = models.FloatField()
+    tamaño = models.OneToOneField(Tamaño, on_delete=models.SET_NULL, null=True)
 
-    def __str__(self):
-        return self.nombre
-    
-class productividad(models.Model):
-    id = models.AutoField(primary_key=True) 
-    fecha = models.DateField()
-    cantidad_agregada = models.IntegerField()
-    id_producto = models.ForeignKey(Producto, to_field='id', on_delete=models.SET_NULL, null=True)
-
+class Lote(models.Model):
+    id = models.AutoField(primary_key=True)
+    produc = models.ForeignKey(Producto,to_field="id",  on_delete=models.CASCADE, null=True)
+    cantidad = models.IntegerField(default=0)
+    fecha_creacion = models.DateField()
+    fecha_vencimiento =  models.DateField(null=True)
+    costo_produccion = models.FloatField()
+    precio_individual = models.FloatField()
 
 class ventas(models.Model):
     id = models.AutoField(primary_key=True)
-    producto_id = models.ForeignKey(Producto, to_field='id', on_delete=models.SET_NULL, null=True)
+    nombre = models.CharField(max_length=45)
     cantidad = models.IntegerField()
     precio_final = models.FloatField()
     fecha = models.DateField()
-    
 
+class DetalleVentas(models.Model):
+    venta = models.ForeignKey(ventas, to_field="id" , on_delete=models.SET_NULL, null=True)
+    lotes = models.ManyToManyField(Lote)
+    
 class recursos(models.Model):
     id = models.AutoField(primary_key=True) 
     nombre_recurso = models.CharField(max_length=45)
