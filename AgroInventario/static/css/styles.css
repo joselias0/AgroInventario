@@ -1,7 +1,3 @@
-.contenido{
-    display: flex;
-}
-
 #cerrar{
     text-decoration: none;
     color: black;
@@ -10,8 +6,3 @@
 #btn-reg {
     text-align: end;
 }
-
-.container {
-    margin: 0 auto;
-    max-width: 800px;
-  }

@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import recursos, gastos_recursos ,salud_gallinas
 from .formularios import RecursoForm , GastoForm, SaludForm
 from .models import *
+from django.db.models import Count
 # Create your views here.
 
 @login_required
@@ -25,10 +26,9 @@ def huevos(request):
     pro = Producto.objects.all()
     return render(request, 'adm-huevos.html', {'Producto':pro})
 
-@csrf_protect
-@login_required
 def venta(request):
-    return render(request, 'adm-ventas.html')
+    ventas_unicas = ventas.objects.all()
+    return render(request, 'adm-ventas.html', {'ventas': ventas_unicas})
 
 @csrf_protect
 @login_required

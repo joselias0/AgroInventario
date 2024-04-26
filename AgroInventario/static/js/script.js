@@ -17,3 +17,60 @@ function botonEliminar1(id) {
     window.location.href = `/borrar_tamano/${id}`;
     }
 }
+
+function abrir_modal_edicion(url){
+  $('#edit_tamaño').load(url, function(){
+    $(this).modal('show');
+  });
+}
+
+function abrir_modal_tamano(url){
+  $('#add_tamano').load(url, function(){
+    $(this).modal('show');
+  });
+}
+
+function abrir_modal_inventario(url){
+  $('#add_inventario').load(url, function(){
+    $(this).modal('show');
+  });
+}
+
+function abrir_modal_edit_lote(url){
+  $('#edit_lote').load(url, function(){
+    $(this).modal('show');
+  });
+}
+
+function abrir_modal_add_venta(url){
+  $('#add_venta').load(url, function(){
+    $(this).modal('show');
+  });
+}
+realizar_cambio
+function abrir_modal_r_cambio(url){
+  $('#realizar_cambio').load(url, function(){
+    $(this).modal('show');
+  });
+}
+
+function borrar_modal(url){
+  $('#borrar').load(url, function(){
+    $(this).modal('show');
+  });
+}
+
+document.getElementById('mostrarContra').addEventListener('click', function () {
+  var contra = document.getElementById('password');
+  var btn = document.getElementById('mostrarContra');
+  var icono = document.getElementById('icon');
+  
+  if (contra.type === 'password') {
+    contra.type = 'text';
+    icon.className = 'fa fa-eye-slash';
+  } else {
+    contra.type = 'password';
+    icon.className = 'fa fa-eye';;
+  }
+});
+  
