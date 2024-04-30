@@ -15,8 +15,8 @@
   <div class="container">
     <a class="navbar-brand">AgroInventario</a>
     <form class="d-flex" role="search">
-      <a id="cerrar" href="{% url 'index' %}" class="me-3 btn btn-warning">Regresar</a>
-      <a id="cerrar" href="{% url 'salir' %}" class="btn btn-danger">Cerrar Sesión</a>
+      <a id="cerrar" href="{% url 'index' %}" class="me-3 btn btn-warning text-light">Regresar</a>
+      <a id="cerrar" href="{% url 'salir' %}" class="btn btn-danger text-light">Cerrar Sesión</a>
     </form>
   </div>
 </nav>
@@ -41,7 +41,8 @@
       {% endif %}
   </div>
 <h1 class="text-center mt-3">Listado de Recursos</h1>
-<a  href="{% url 'adicion' %}" type="submit" class="btn btn-primary mt-3 mb-3">Agregar</a>
+<a onclick="modal_creacion('{% url 'adicion' %}')" class="btn btn-primary mt-3 mb-3">Nuevo Recurso</a>
+
 <table class="table text-center">
   <thead>
     <tr>
@@ -58,8 +59,9 @@
       <td>{{ recurso.descripcion }}</td>
       <td>{{ recurso.cantidad_disponible }}</td>
       <td>
-        <a href="{% url 'gasto' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
-        <a href="{% url 'editar_recurso' recurso.id %}" class="btn btn-primary"><i class="fas fa-edit"></i>Editar</a>
+        
+        <a onclick="modal_agregarGasto('{% url 'gasto' recurso.id %}')" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+        <a onclick="modal_editarRecurso('{% url 'editar_recurso' recurso.id %}')" class="btn btn-primary"><i class="fas fa-edit"></i>Editar</a>
         <a href="{% url 'eliminarRecurso' recurso.id %}" class="btn btn-danger" onclick="return confirm('¿Estás Seguro Que Deseas Eliminar el Recurso?');">
           <i class="fas fa-trash-alt"></i> Eliminar
         </a>
@@ -70,16 +72,54 @@
 </table>
 </div>
 
+<div class="modal fade" id="editar_recurso" role="dialog">
+
+</div> 
+
+
+<div class="modal fade" id="agregar_gasto" role="dialog">
+
+</div> 
+
+<div class="modal fade" id="crear_recurso" role="dialog">
+
+</div> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
 <script>
-  // Limpieza de mensajes después de 5 segundos
+  function modal_creacion(url){
+  $('#crear_recurso').load(url, function(){
+    $(this).modal('show');
+  });
+}
+</script>
+
+<script>
+  function modal_editarRecurso(url){
+  $('#editar_recurso').load(url, function(){
+    $(this).modal('show');
+  });
+}
+</script>
+
+<script>
+  function modal_agregarGasto(url){
+  $('#agregar_gasto').load(url, function(){
+    $(this).modal('show');
+  });
+}
+</script>
+
+<script>
   setTimeout(function() {
     $('.alert').alert('close');
   }, 5000);
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 </body>
 </html>
