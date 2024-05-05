@@ -10,6 +10,7 @@ urlpatterns = [
     path('huevos/',huevos, name='huevos'),
     path('contabilidad/',contabilidad, name='contabilidad'),
     path('cuidado/',cuidado, name='cuidado'),
+    path('recurso/',recurso, name='recurso'),
     path('recursos/gasto/<int:id_recurso>',agregarGasto, name='gasto'),
     path('recursos/adicion', adicion, name='adicion'),
     path('recursos/editarRecurso/<int:id>', editarRecurso, name='editar_recurso'),

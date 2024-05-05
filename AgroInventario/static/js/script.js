@@ -60,17 +60,4 @@ function borrar_modal(url){
   });
 }
 
-document.getElementById('mostrarContra').addEventListener('click', function () {
-  var contra = document.getElementById('password');
-  var btn = document.getElementById('mostrarContra');
-  var icono = document.getElementById('icon');
-  
-  if (contra.type === 'password') {
-    contra.type = 'text';
-    icon.className = 'fa fa-eye-slash';
-  } else {
-    contra.type = 'password';
-    icon.className = 'fa fa-eye';;
-  }
-});
   
